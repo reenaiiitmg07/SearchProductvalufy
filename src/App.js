@@ -9,8 +9,9 @@ class App extends Component {
   }
   render() {
     console.log(this.props.data);
-    let stocks=this.props.data;
+    let stocks=this.props.searchData.length>0?this.props.searchData:this.props.data
     return (
+
       <div className="App">
         <Search />
       <ul className="list-inline">
@@ -35,6 +36,7 @@ class App extends Component {
 function mapStateToProps(state){
   return {
     data:state.data,
+    searchData:state.searchData
   }
 }
 

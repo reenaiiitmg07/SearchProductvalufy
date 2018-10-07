@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {setSearchData} from '../actions/index'
 import {connect} from 'react-redux';
 
 class Search extends Component {
@@ -12,8 +13,13 @@ class Search extends Component {
   }
   onSubmitHandle(e){
     e.preventDefault();
+    let searchTerm=this.state.term.toUpperCase();
     console.log(this.state.term);
-    console.log(e.target.name);
+    let searchData=this.props.data.filter((item)=>{
+      return item.SYMBOL.includes(searchTerm)
+    })
+    console.log(searchData);
+    this.props.setSearchData(searchData);
   }
   onChangeHandle(e){
    this.setState({
@@ -23,7 +29,7 @@ class Search extends Component {
   render(){
     return(
       <div className="row" style={{ textAlign: 'center', padding: '10px' }}>
-      <form  onsubmit={this.onSubmitHandle}>
+      <form  onSubmit={this.onSubmitHandle}>
         Search: <input type="text" onChange={this.onChangeHandle} name="search"/>
        <input type="submit" value="Submit"/>
      </form>
@@ -39,4 +45,4 @@ function mapStateToProps(state){
   }
 }
 
-export default connect(mapStateToProps,{})(Search);
+export default connect(mapStateToProps,{setSearchData})(Search);
